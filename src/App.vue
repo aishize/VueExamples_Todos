@@ -1,28 +1,33 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <v-app-bar
+      app
+    >
+    </v-app-bar>
+    <v-content>
+      <router-view />
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  created: function () {
+    const storage = localStorage.getItem('todos')
+    const todos = JSON.parse(storage)
+    if (todos.length > 0) {
+      this.getTodos(todos)
+    }
+  },
+  methods: {
+    ...mapActions(['getTodos'])
   }
-}
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="sass">
+html
+  overflow-y: auto !important
 </style>
