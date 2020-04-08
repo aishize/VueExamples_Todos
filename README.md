@@ -1,4 +1,4 @@
-# play-with-slots
+# vue-examples-todos
 
 ## Project setup
 ```
