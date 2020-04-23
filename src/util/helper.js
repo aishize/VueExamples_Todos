@@ -3,7 +3,7 @@ function checkRepeat (list, newId) {
 }
 
 export const generateId = todoList => {
-    const newId = Math.floor(Math.random() * 1234567) + 9876
+    const newId = Math.floor(Math.random() * 1234567) - 9876
     if (checkRepeat(todoList, newId)) {
         return newId
     } else {

@@ -38,8 +38,6 @@
                             @remove-todo="removeTodo"
                             @complete-todo="completeTodo"
                         />
-                    </div>
-                    <div v-if="isThere">
                         <Footer
                             :currentType="type"
                             @display-by-type="toDisplay"
