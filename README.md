@@ -1,4 +1,4 @@
-# play-with-slots
+# todos
 
 ## Project setup
 ```

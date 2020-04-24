@@ -10,3 +10,11 @@ export const generateId = todoList => {
         generateId(todoList)
     }
 }
+
+export const factory = (fn, component, props) => {
+    return fn(component, {
+      propsData: {
+        ...props
+      }
+    })
+  }
