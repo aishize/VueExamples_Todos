@@ -1,7 +1,7 @@
 // import Vue from 'vue'
 import { mount, shallowMount } from '@vue/test-utils'
 import { factory } from '@/util/helper'
-import Greeting from '@/components/Greeting'
+import Greeting from '@/components/onlyForTests/Greeting'
 import flushPromises from 'flush-promises'
 import {
   Parent,
@@ -9,8 +9,11 @@ import {
   PropsTest,
   NumberRenderer,
   FormSubmitter,
-  Emitter
-} from '@/components/MyComponents'
+  Emitter,
+  ParentWithManyChildren
+} from '@/components/onlyForTests/MyComponents'
+import { asyncParent, asyncChild } from '@/components/onlyForTests/asyncComponents'
+import FindParent from '@/components/onlyForTests/FindParent'
 
 jest.mock('axios', () => ({
   get: jest.fn(() => Promise.resolve())
@@ -37,12 +40,13 @@ describe('Parent and Child', () => {
     })
     expect(wrapper.html()).toMatch('I love Vue!')
   })
-  // it('render "I love You too <3" in a Parent Component after click button in a Child', () => {
-  //   const wrapper = mount(Parent)
-  //   const wrapperChild = mount(Child)
-  //   wrapperChild.vm.$emit('custom')
-  //   expect(wrapper.text()).toMatch('I love You too <3')
-  // })
+  it('render "I love You too <3" in a Parent Component after click button in a Child', async () => {
+    const wrapper = mount(Parent)
+    const child = wrapper.find({ name: 'Child' })
+    child.find('.custom').trigger('click')
+    await wrapper.vm.$nextTick()
+    expect(wrapper.text()).toMatch('I love You too <3')
+  })
 })
 
 describe('props test', () => {
@@ -113,5 +117,56 @@ describe('Emitter', () => {
     Emitter.options.methods.emitEvent.call({ $emit })
 
     expect(events.myEvent).toEqual(['name', 'password'])
+  })
+})
+
+describe('asyncParent', () => {
+  it('renders with mount and does init Api call', () => {
+    // const wrapper = mount(asyncParent, {
+    //   stubs: {
+    //     asyncChild: '<div class="stub"/>'
+    //   }
+    // })
+    const wrapper = shallowMount(asyncParent)
+    expect(wrapper.find(asyncChild).exists()).toBeTruthy()
+  })
+})
+
+describe('FindParent', () => {
+  it('does not render a span', () => {
+    const wrapper = mount(FindParent)
+
+    expect(wrapper.find('span').isVisible()).toBeFalsy()
+  })
+  it('does render a span', () => {
+    const wrapper = mount(FindParent, {
+      data: () => ({
+        showSpan: true
+      })
+    })
+
+    expect(wrapper.find('span').isVisible()).toBeTruthy()
+  })
+  it('does not render a Children Component', () => {
+    const wrapper = mount(FindParent)
+
+    expect(wrapper.find({ name: 'Children' }).exists()).toBeFalsy()
+  })
+  it('does render a Children component', () => {
+    const wrapper = mount(FindParent, {
+      data: () => ({
+        showChild: true
+      })
+    })
+
+    expect(wrapper.find({ name: 'Children' }).exists()).toBeTruthy()
+  })
+})
+
+describe('ParentWithManyChildren', () => {
+  it('renders many children', () => {
+    const wrapper = mount(ParentWithManyChildren)
+
+    expect(wrapper.findAll({ name: 'Children' }).length).toBeTruthy()
   })
 })

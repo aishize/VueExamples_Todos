@@ -31,5 +31,11 @@ export default {
     },
     SET_EXIST_TODOS: (state, payload) => {
         state.todoList = [...state.todoList, ...payload]
+    },
+    ASYNC_API_CALL: (state, data) => {
+        state.asyncCall = [...state.asyncCall, data]
+    },
+    SET_AUTH: (state, isAuthenticated) => {
+        state.auth = isAuthenticated
     }
 }

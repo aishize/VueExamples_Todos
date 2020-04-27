@@ -1,8 +1,10 @@
 import Vue from 'vue'
 // import instance from '@/services/instance'
 import axios from 'axios'
+import Children from './Children'
 
 export const Child = Vue.component("Child", {
+  name: 'Child',
   props: {
     text: {
       type: String,
@@ -17,12 +19,18 @@ export const Child = Vue.component("Child", {
   template: `
     <div>
       <button @click="test">test</button>
-      <button @click="$emit('custom')">{{ text }}</button>
+      <button
+        @click="$emit('custom')"
+        class="custom"
+      >
+        {{ text }}
+      </button>
     </div>
   `
 })
 
 export const Parent = Vue.component("Parent", {
+  name: 'Parent',
   components: {
     Child
   },
@@ -122,6 +130,24 @@ export const Emitter = Vue.component("Emitter", {
   },
   template: `
     <div>
+    </div>
+  `
+})
+
+export const ParentWithManyChildren = Vue.component('ParentWithManyChildren', {
+  name: 'ParentWithManyChildren',
+  components: {
+    Children
+  },
+  data: () => ({
+    number: 3
+  }),
+  template: `
+    <div>
+      <Children
+        v-for="item in number"
+        :key="item"
+      />
     </div>
   `
 })

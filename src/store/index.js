@@ -9,6 +9,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         todoList: [],
+        asyncCall: []
     },
     actions,
     mutations,
