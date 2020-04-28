@@ -22,30 +22,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">15.15% </span>
+                <span class="strong">27.27% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/33</span>
+                <span class='fraction'>9/33</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">10% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>1/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">21.05% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/19</span>
+                <span class='fraction'>4/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">15.15% </span>
+                <span class="strong">27.27% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/33</span>
+                <span class='fraction'>9/33</span>
             </div>
         
             
@@ -292,29 +292,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -462,15 +462,15 @@ export default {
         Header,
         Footer
     },
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >    data: () =&gt; ({</span></span>
+    data: () =&gt; ({
         type: 'all',
         todo: '',
         hasError: false
     }),
     computed: {
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >        ...mapState({ todoList: state =&gt; state.todoList }),</span></span>
-<span class="fstat-no" title="function not covered" >        isThere: function () {</span>
-<span class="cstat-no" title="statement not covered" >            return this.todoList.length &gt; 0</span>
+        ...mapState({ todoList: state =&gt; state.todoList }),
+        isThere: function () {
+            return this.todoList.length &gt; 0
         },
 <span class="fstat-no" title="function not covered" >        currentDisplay: function () {</span>
 <span class="cstat-no" title="statement not covered" >            if (this.type === 'active') return this.activeTodo</span>
@@ -483,8 +483,8 @@ export default {
 <span class="fstat-no" title="function not covered" >        completedTodo: function () {</span>
 <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >            return this.todoList.filter(todo =&gt; todo.isDone === true)</span></span>
         },
-<span class="fstat-no" title="function not covered" >        allTodosCompleted: function () {</span>
-<span class="cstat-no" title="statement not covered" >            if (this.todoList.length === 0) return false</span>
+        allTodosCompleted: function () {
+<span class="missing-if-branch" title="else path not taken" >E</span>            if (this.todoList.length === 0) return false
 <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >            return this.todoList.every(todo =&gt; todo.isDone === true)</span></span>
         }
     },
@@ -573,7 +573,7 @@ export default {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Apr 27 2020 17:54:57 GMT+0300 (Москва, стандартное время)
+                at Tue Apr 28 2020 10:12:01 GMT+0300 (Москва, стандартное время)
             </div>
         </div>
         <script src="..\..\prettify.js"></script>

@@ -1,6 +1,6 @@
-import mutations from '../mutations'
-import getters from '../getters'
-import actions from '../actions'
+import mutations from '../src/store/mutations'
+import getters from '../src/store/getters'
+import actions from '../src/store/actions'
 import flushPromises from 'flush-promises'
 
 let url = ''

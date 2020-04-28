@@ -2,7 +2,7 @@
 import Vuetify from 'vuetify'
 import Vuex from 'vuex'
 import { createLocalVue, shallowMount } from '@vue/test-utils'
-import ComponentWithButtons from '../ComponentWithButtons'
+import ComponentWithButtons from '../src/components/onlyForTests/ComponentWithButtons'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)

@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import Greeting from '../Greeting'
+import Greeting from '../src/components/onlyForTests/Greeting'
 
 describe('greeting', () => {
   it('renders a greeting', () => {

@@ -9,9 +9,9 @@ import {
   FormSubmitter,
   Emitter,
   ParentWithManyChildren
-} from '../MyComponents'
-import { asyncParent, asyncChild } from '../asyncComponents'
-import FindParent from '../FindParent'
+} from '../src/components/onlyForTests/MyComponents'
+import { asyncParent, asyncChild } from '../src/components/onlyForTests/asyncComponents'
+import FindParent from '../src/components/onlyForTests/FindParent'
 
 jest.mock('axios', () => ({
   get: jest.fn(() => Promise.resolve())
