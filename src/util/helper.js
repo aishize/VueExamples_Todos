@@ -10,3 +10,7 @@ export const generateId = todoList => {
         generateId(todoList)
     }
 }
+
+export const libraryImitator = () => {
+    return null
+}

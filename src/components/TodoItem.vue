@@ -12,6 +12,7 @@
                 >
                     <v-icon
                         v-if="todo.isDone"
+                        class="complete-active-icon"
                         color="#61ed89"
                     >
                         mdi-check
@@ -21,7 +22,7 @@
             <v-col cols="8">
                 <span class="caption grey--text todo-id">id{{ todo.id }}</span>
                 <v-card-title
-                    class="pt-0"
+                    class="pt-0 description"
                     :class="todo.isDone ? 'todo-done' : ''"
                 >
                     {{ todo.description }}

@@ -5,20 +5,22 @@ import VueRouter from "vue-router"
 import App from '../src/App'
 import Home from '../src/views/Home'
 import SomeNestedRouteComponent from '../src/components/onlyForTests/SomeNestedRouteComponent'
+import mockModule from '../src/util/helper'
 
 const localVue = createLocalVue()
 localVue.use(VueRouter)
 Vue.use(Vuetify)
 
 const routes = [
-  { path: "/", component: Home },
-  { path: "/nested-route", component: SomeNestedRouteComponent }
+  { path: "/", name: 'home', component: Home },
+  { path: "/nested-route", name: 'nested', component: SomeNestedRouteComponent, props: true }
 ]
 
 // jest.mock("@/views/Home.vue", () => ({
 //   name: "Home",
 //   render: h => h("div")
 // }))
+jest.mock('@/util/helper', () => ({ libraryImitator: jest.fn() }))
 
 describe('App', () => {
   let vuetify, router
@@ -54,10 +56,45 @@ describe('App', () => {
     const wrapper = mountFunction()
     expect(wrapper.find({ name: 'Home' }).exists()).toBeTruthy()
   })
-  it('render nested route component', async () => {
+  it('renders a child component via routing', async () => {
     const wrapper = mountFunction()
     router.push('/nested-route')
     await wrapper.vm.$nextTick()
     expect(wrapper.find({ name: 'SomeNestedRouteComponent' }).exists()).toBeTruthy()
   })
+  it('renders a username from query string when push to /nested-route', async () => {
+    const username = 'John'
+    const wrapper = mountFunction()
+    router.push({ name: 'nested', params: { username }, query: { username: null } }).catch(() => {})
+    await wrapper.vm.$nextTick()
+    // console.log(wrapper.vm.$route)
+    // console.log(wrapper.html())
+    expect(wrapper.find('.username').text()).toContain(username)
+  })
 })
+describe('SomeNestedRouteComponent', () => {
+  let vuetify
+  beforeEach(() => {
+    vuetify = new Vuetify()
+  })
+  it('renders a username from query string with $route mock', async () => {
+    const username = 'John'
+    const wrapper = mount(SomeNestedRouteComponent, {
+      mocks: {
+        $route: {
+          params: { username }
+        }
+      },
+      vuetify
+    })
+    expect(wrapper.find('.username').text()).toContain(username)
+  })
+  it('calls libraryImitator and next when enter the route', () => {
+    const next = jest.fn()
+    SomeNestedRouteComponent.beforeRouteEnter(undefined, undefined, next)
+
+    expect(mockModule.libraryImitator).toHaveBeenCalled()
+    expect(next).toHaveBeenCalled()
+  })
+})
+

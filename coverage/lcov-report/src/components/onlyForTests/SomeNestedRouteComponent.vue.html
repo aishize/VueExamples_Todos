@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/components/onlyForTests/asyncComponents.js</title>
+    <title>Code coverage report for src/components/onlyForTests/SomeNestedRouteComponent.vue</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="..\..\..\prettify.css" />
     <link rel="stylesheet" href="..\..\..\base.css" />
@@ -18,34 +18,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="..\..\..\index.html">All files</a> / <a href="index.html">src/components/onlyForTests</a> asyncComponents.js</h1>
+        <h1><a href="..\..\..\index.html">All files</a> / <a href="index.html">src/components/onlyForTests</a> SomeNestedRouteComponent.vue</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/5</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/5</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
@@ -54,7 +54,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -88,14 +88,7 @@
 <a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -107,43 +100,50 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import Vue from 'vue'
-import axios from 'axios'
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template&gt;
+  &lt;div&gt;
+    {{ text }}
+    &lt;v-card class="username"&gt;
+      &lt;v-card-title&gt;
+        {{ paramsText }}
+      &lt;/v-card-title&gt;
+    &lt;/v-card&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { libraryImitator } from '@/util/helper'
 &nbsp;
-export const asyncChild = Vue.component('asyncChild', {
-  created: <span class="fstat-no" title="function not covered" >as</span>ync function () {
-<span class="cstat-no" title="statement not covered" >    this.makeApiCall()</span>
+export default {
+  name: 'SomeNestedRouteComponent',
+  data: () =&gt; ({
+    text: 'nested route'
+  }),
+  beforeRouteEnter: function (to, from, next) {
+    libraryImitator()
+    next()
   },
-  methods: {
-    makeApiCall: <span class="fstat-no" title="function not covered" >as</span>ync function () {
-<span class="cstat-no" title="statement not covered" >      console.log('making api call')</span>
-<span class="cstat-no" title="statement not covered" >      await axios.get('https://jsonplaceholder.typicode.com/posts/1')</span>
+  computed: {
+    paramsText: function () {
+      if (!this.$route.params.username) return 'default'
+      return this.$route.params.username
     }
-  },
-  template: `
-    &lt;div /&gt;
-  `
-})
-&nbsp;
-export const asyncParent = Vue.component('asyncParent', {
-  components: {
-    asyncChild
-  },
-  template: `
-    &lt;div&gt;
-      &lt;asyncChild /&gt;
-    &lt;/div&gt;
-  `
-})
-&nbsp;
-&nbsp;</pre></td></tr></table></pre>
+  }
+}
+&lt;/script&gt;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
