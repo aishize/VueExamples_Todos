@@ -16,14 +16,17 @@ import { mapActions } from 'vuex'
 export default {
   name: 'App',
   created: function () {
-    const storage = localStorage.getItem('todos')
-    const todos = JSON.parse(storage)
-    if (todos.length > 0) {
-      this.getTodos(todos)
-    }
+    this.initial()
   },
   methods: {
-    ...mapActions(['getTodos'])
+    ...mapActions(['getTodos']),
+    initial: function () {
+      const storage = localStorage.getItem('todos')
+      const todos = JSON.parse(storage)
+      if (todos.length) {
+        this.getTodos(todos)
+      }
+    }
   }
 };
 </script>

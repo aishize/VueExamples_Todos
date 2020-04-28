@@ -1,7 +1,5 @@
 // import Vue from 'vue'
 import { mount, shallowMount } from '@vue/test-utils'
-import { factory } from '@/util/helper'
-import Greeting from '@/components/onlyForTests/Greeting'
 import flushPromises from 'flush-promises'
 import {
   Parent,
@@ -11,21 +9,13 @@ import {
   FormSubmitter,
   Emitter,
   ParentWithManyChildren
-} from '@/components/onlyForTests/MyComponents'
-import { asyncParent, asyncChild } from '@/components/onlyForTests/asyncComponents'
-import FindParent from '@/components/onlyForTests/FindParent'
+} from '../MyComponents'
+import { asyncParent, asyncChild } from '../asyncComponents'
+import FindParent from '../FindParent'
 
 jest.mock('axios', () => ({
   get: jest.fn(() => Promise.resolve())
 }))
-
-
-describe('greeting', () => {
-  it('renders a greeting', () => {
-    const wrapper = mount(Greeting)
-    expect(wrapper.text()).toMatch('Vue and TDD')
-  })
-})
 
 describe('Parent and Child', () => {
   it('render "Parent Component" in the Parent Component', () => {
@@ -51,16 +41,24 @@ describe('Parent and Child', () => {
 
 describe('props test', () => {
   const msg = 'login'
+  const factory = (propsData) => {
+    return shallowMount(PropsTest, {
+      propsData: {
+        msg,
+        ...propsData
+      }
+    })
+  }
   describe('{ admin: false }', () => {
     it('render a message for unauthorized user', () => {
-      const wrapper = factory(shallowMount, PropsTest, { msg })
+      const wrapper = factory()
       expect(wrapper.find('span').text()).toBe('unauthorized')
       expect(wrapper.find('button').text()).toBe('login')
     })
   })
   describe('{ admin: true }', () => {
     it('render a message for Admin if prop isAdmin has value true', () => {
-      const wrapper = factory(shallowMount, PropsTest, { msg, isAdmin: true })
+      const wrapper = factory({ isAdmin: true })
       expect(wrapper.find('span').text()).toBe('is admin')
       expect(wrapper.find('button').text()).toBe('login')
     })
@@ -68,12 +66,19 @@ describe('props test', () => {
 })
 
 describe('NumberRenderer', () => {
+  const factory = (propsData) => {
+    return shallowMount(NumberRenderer, {
+      propsData: {
+        ...propsData
+      }
+    })
+  }
   it('render [2, 4, 6, 8] if prop "even" has value true', () => {
-    const wrapper = factory(shallowMount, NumberRenderer, { even: true })
+    const wrapper = factory({ even: true })
     expect(wrapper.text()).toBe('2, 4, 6, 8')
   })
   it('display [1, 3, 5, 7, 9] if prop "even" has value false; (using call instead shallowMount)', () => {
-    // const wrapper = factory(shallowMount, NumberRenderer, { even: false })
+    // const wrapper = factory({ even: false })
     // expect(wrapper.text()).toBe('1, 3, 5, 7, 9')
     const localThis = { even: false }
     expect(NumberRenderer.options.computed.numbers.call(localThis)).toBe('1, 3, 5, 7, 9')

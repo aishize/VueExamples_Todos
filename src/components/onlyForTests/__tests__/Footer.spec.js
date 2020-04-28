@@ -2,7 +2,7 @@ import Vue from 'vue'
 // import Vuex from 'vuex'
 import vuetify from 'vuetify'
 import { shallowMount } from '@vue/test-utils'
-import Footer from '../Footer'
+import Footer from '../../Footer'
 
 Vue.use(vuetify)  
 // Vue.use(Vuex)

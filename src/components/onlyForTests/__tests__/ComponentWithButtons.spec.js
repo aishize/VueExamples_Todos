@@ -5,8 +5,6 @@ import { createLocalVue, shallowMount } from '@vue/test-utils'
 import ComponentWithButtons from '../ComponentWithButtons'
 
 const localVue = createLocalVue()
-const vuetify = new Vuetify()
-localVue.use(vuetify)
 localVue.use(Vuex)
 const mutations = {
   testMutation: jest.fn()
@@ -14,9 +12,14 @@ const mutations = {
 const store = new Vuex.Store({ mutations })
 
 describe('ComponentWithButtons', () => {
+  let vuetify
+  beforeEach(() => {
+    vuetify = new Vuetify()
+  })
   it('commits a mutation when click a button', async () => {
     const wrapper = shallowMount(ComponentWithButtons, {
-      store, localVue
+      store, localVue,
+      vuetify
     })
     wrapper.find('.commit').trigger('click')
     await wrapper.vm.$nextTick()
@@ -27,7 +30,7 @@ describe('ComponentWithButtons', () => {
     store.dispatch = jest.fn()
 
     const wrapper = shallowMount(ComponentWithButtons, {
-      store, localVue
+      store, localVue, vuetify
     })
     wrapper.find('.namespaced-dispatch').trigger('click')
     // wrapper.vm.handleNamespacedDispatch()
@@ -42,7 +45,8 @@ describe('ComponentWithButtons', () => {
     const wrapper = shallowMount(ComponentWithButtons, {
       mocks: {
         $store: mockStore
-      }
+      },
+      vuetify
     })
     wrapper.find('.dispatch').trigger('click')
     await wrapper.vm.$nextTick()
