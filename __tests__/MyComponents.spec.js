@@ -13,9 +13,7 @@ import {
 import { asyncParent, asyncChild } from '../src/components/onlyForTests/asyncComponents'
 import FindParent from '../src/components/onlyForTests/FindParent'
 
-jest.mock('axios', () => ({
-  get: jest.fn(() => Promise.resolve())
-}))
+jest.mock('axios')
 
 describe('Parent and Child', () => {
   it('render "Parent Component" in the Parent Component', () => {

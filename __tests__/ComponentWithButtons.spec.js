@@ -1,11 +1,12 @@
 // import Vue from 'vue'
 import Vuetify from 'vuetify'
 import Vuex from 'vuex'
-import { createLocalVue, shallowMount } from '@vue/test-utils'
+import { createLocalVue, mount } from '@vue/test-utils'
 import ComponentWithButtons from '../src/components/onlyForTests/ComponentWithButtons'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
+localVue.use(Vuetify)
 const mutations = {
   testMutation: jest.fn()
 }
@@ -16,11 +17,15 @@ describe('ComponentWithButtons', () => {
   beforeEach(() => {
     vuetify = new Vuetify()
   })
-  it('commits a mutation when click a button', async () => {
-    const wrapper = shallowMount(ComponentWithButtons, {
-      store, localVue,
-      vuetify
+  const mountFunction = options => {
+    return mount(ComponentWithButtons, {
+      localVue,
+      vuetify,
+      ...options,
     })
+  }
+  it('commits a mutation when click a button', async () => {
+    const wrapper = mountFunction({ store })
     wrapper.find('.commit').trigger('click')
     await wrapper.vm.$nextTick()
     expect(mutations.testMutation).toHaveBeenCalledWith({}, { msg: 'Test Commit' })
@@ -29,9 +34,7 @@ describe('ComponentWithButtons', () => {
     const store = new Vuex.Store()
     store.dispatch = jest.fn()
 
-    const wrapper = shallowMount(ComponentWithButtons, {
-      store, localVue, vuetify
-    })
+    const wrapper = mountFunction({ store })
     wrapper.find('.namespaced-dispatch').trigger('click')
     // wrapper.vm.handleNamespacedDispatch()
     await wrapper.vm.$nextTick()
@@ -42,7 +45,7 @@ describe('ComponentWithButtons', () => {
   })
   it('dispatch an action when click a button', async () => {
     const mockStore = { dispatch: jest.fn() }
-    const wrapper = shallowMount(ComponentWithButtons, {
+    const wrapper = mountFunction({
       mocks: {
         $store: mockStore
       },

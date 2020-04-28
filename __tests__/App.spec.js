@@ -1,19 +1,18 @@
-import { createLocalVue, mount, shallowMount } from '@vue/test-utils'
+import { createLocalVue, mount } from '@vue/test-utils'
 import Vuetify from 'vuetify'
 import VueRouter from "vue-router"
 import App from '../src/App'
 import Home from '../src/views/Home'
 import SomeNestedRouteComponent from '../src/components/onlyForTests/SomeNestedRouteComponent'
 
+const localVue = createLocalVue()
+localVue.use(VueRouter)
+localVue.use(Vuetify)
 
 const routes = [
   { path: "/", component: Home },
   { path: "/nested-route", component: SomeNestedRouteComponent }
 ]
-
-const localVue = createLocalVue()
-localVue.use(VueRouter)
-const router = new VueRouter({ routes }) 
 
 // jest.mock("@/views/Home.vue", () => ({
 //   name: "Home",
@@ -21,22 +20,18 @@ const router = new VueRouter({ routes })
 // }))
 
 describe('App', () => {
-  let vuetify
+  let vuetify, router
   beforeEach(() => {
     vuetify = new Vuetify()
+    router = new VueRouter({ 
+      routes 
+    }) 
   })
-  it('App is a Vue instance', () => {
-    const wrapper = shallowMount(App, {
-      methods: {
-        initial: jest.fn()
-      },
-      localVue,
-      vuetify
-    })
-    expect(wrapper.isVueInstance()).toBeTruthy()
-  })
-  it('render Home component', () => {
-    const wrapper = mount(App, {
+  const mountFunction = options => {
+    return mount(App, {
+      localVue, 
+      vuetify,
+      router,
       mocks: {
         $store: {
           state: {
@@ -47,30 +42,21 @@ describe('App', () => {
       methods: {
         initial: jest.fn()
       },
-      vuetify,
-      router,
-      localVue
+      ...options
     })
+  }
+  it('App is a Vue instance', () => {
+    const wrapper = mountFunction()
+    expect(wrapper.isVueInstance()).toBeTruthy()
+  })
+  it('render Home component', () => {
+    const wrapper = mountFunction()
     expect(wrapper.find({ name: 'Home' }).exists()).toBeTruthy()
   })
-  // it('render nested route component', () => {
-  //   const wrapper = mount(App, {
-  //     mocks: {
-  //       $store: {
-  //         state: {
-  //           todoList: jest.fn()
-  //         }
-  //       }
-  //     },
-  //     methods: {
-  //       initial: jest.fn()
-  //     },
-  //     localVue,
-  //     router,
-  //     vuetify
-  //   })
-  //   router.push('/nested-route')
-  //   // console.log(wrapper.html())
-  //   expect(wrapper.find(SomeNestedRouteComponent).exists()).toBeTruthy()
-  // })
+  it('render nested route component', async () => {
+    const wrapper = mountFunction()
+    router.push('/nested-route')
+    await wrapper.vm.$nextTick()
+    expect(wrapper.find({ name: 'SomeNestedRouteComponent' }).exists()).toBeTruthy()
+  })
 })

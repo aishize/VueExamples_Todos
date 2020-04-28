@@ -1,6 +1,6 @@
 import Vue from 'vue'
-// import instance from '@/services/instance'
-import axios from 'axios'
+import instance from '@/services/instance'
+// import axios from 'axios'
 import Children from './Children'
 
 export const Child = Vue.component("Child", {
@@ -99,7 +99,7 @@ export const FormSubmitter = Vue.component("FormSubmitter", {
   methods: {
     handleSubmitAsync: async function () {
       try {
-        await axios.get('api-example/v1/register', { username: this.username })
+        await instance.get('api-example/v1/register', { username: this.username })
         this.submitted = true
       } catch (error) {
         throw Error('somthing went wrong: ', error)
