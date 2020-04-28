@@ -99,7 +99,7 @@ export const FormSubmitter = Vue.component("FormSubmitter", {
   methods: {
     handleSubmitAsync: async function () {
       try {
-        await instance.get('api-example/v1/register', { username: this.username })
+        await instance.get('/register', { username: this.username })
         this.submitted = true
       } catch (error) {
         throw Error('somthing went wrong: ', error)

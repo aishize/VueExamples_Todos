@@ -1,4 +1,4 @@
-// import Vue from 'vue'
+import Vue from 'vue'
 import Vuetify from 'vuetify'
 import Vuex from 'vuex'
 import { createLocalVue, mount } from '@vue/test-utils'
@@ -6,7 +6,8 @@ import ComponentWithButtons from '../src/components/onlyForTests/ComponentWithBu
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
-localVue.use(Vuetify)
+// localVue.use(Vuetify)
+Vue.use(Vuetify)
 const mutations = {
   testMutation: jest.fn()
 }
@@ -48,8 +49,7 @@ describe('ComponentWithButtons', () => {
     const wrapper = mountFunction({
       mocks: {
         $store: mockStore
-      },
-      vuetify
+      }
     })
     wrapper.find('.dispatch').trigger('click')
     await wrapper.vm.$nextTick()

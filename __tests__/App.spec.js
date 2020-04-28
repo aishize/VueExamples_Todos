@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import { createLocalVue, mount } from '@vue/test-utils'
 import Vuetify from 'vuetify'
 import VueRouter from "vue-router"
@@ -7,7 +8,7 @@ import SomeNestedRouteComponent from '../src/components/onlyForTests/SomeNestedR
 
 const localVue = createLocalVue()
 localVue.use(VueRouter)
-localVue.use(Vuetify)
+Vue.use(Vuetify)
 
 const routes = [
   { path: "/", component: Home },
