@@ -65,10 +65,8 @@ describe('App', () => {
   it('renders a username from query string when push to /nested-route', async () => {
     const username = 'John'
     const wrapper = mountFunction()
-    router.push({ name: 'nested', params: { username }, query: { username: null } }).catch(() => {})
+    router.push({ name: 'nested', query: { username } }).catch(() => {})
     await wrapper.vm.$nextTick()
-    // console.log(wrapper.vm.$route)
-    // console.log(wrapper.html())
     expect(wrapper.find('.username').text()).toContain(username)
   })
 })
@@ -82,7 +80,7 @@ describe('SomeNestedRouteComponent', () => {
     const wrapper = mount(SomeNestedRouteComponent, {
       mocks: {
         $route: {
-          params: { username }
+          query: { username }
         }
       },
       vuetify
